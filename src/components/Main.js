@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../utils/api";
 
 const Main = ({
   onEditProfileClick,
@@ -6,6 +7,15 @@ const Main = ({
   onEditAvatarClick,
   onCardClick,
 }) => {
+  const [userName, setUserName] = useState("");
+  const [userDescription, setUserDescription] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    api();
+  }, []);
+
   return (
     <main>
       <section className="profile">
@@ -15,6 +25,7 @@ const Main = ({
             src=""
             alt="old person with a red hat smiling to camera"
             className="profile__avatar"
+            style={{ backgroundImage: `url(${userAvatar})` }}
           />
         </div>
         <div className="profile__info">
@@ -91,24 +102,25 @@ const Main = ({
       <section className="elements">
         <ul className="elements__list"></ul>
       </section>
-
-      <template id="cards-template">
-        <li className="element">
-          <button
-            className="element__delete-button"
-            aria-label="Delete button"
-            type="button"
-          ></button>
-          <div className="element__image"></div>
-          <div className="element__flex">
-            <h2 className="element__text"></h2>
-            <div className="element__like-wrapper">
-              <button type="button" className="element__like-button"></button>
-              <p className="element__like-count"></p>
+      {cards.map((card) => (
+        <template id="cards-template">
+          <li className="element">
+            <button
+              className="element__delete-button"
+              aria-label="Delete button"
+              type="button"
+            ></button>
+            <div className="element__image"></div>
+            <div className="element__flex">
+              <h2 className="element__text"></h2>
+              <div className="element__like-wrapper">
+                <button type="button" className="element__like-button"></button>
+                <p className="element__like-count"></p>
+              </div>
             </div>
-          </div>
-        </li>
-      </template>
+          </li>
+        </template>
+      ))}
     </main>
   );
 };

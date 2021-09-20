@@ -7,7 +7,7 @@ const ImagePopup = () => {
           className="popup__close-button popup__close-button_preview"
           aria-label="Close button"
         ></button>
-        <img className="popup__image" src="#" alt="preview image" />
+        <img className="popup__image" src="#" alt="preview" />
         <p className="popup__preview-title"></p>
       </div>
     </section>

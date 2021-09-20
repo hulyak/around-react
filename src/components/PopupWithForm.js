@@ -1,5 +1,9 @@
 import React from "react";
 
+// "Edit profile";
+// "New place";
+// "Update profile picture";
+// "Are you sure?"
 const PopupWithForm = ({ title, name, isOpen }) => {
   return (
     <section className={`popup popup_type_${name}`}>
