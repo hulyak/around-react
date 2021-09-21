@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Card from "./Card";
 
 const Main = ({
@@ -17,7 +16,7 @@ const Main = ({
           <div
             className="profile__avatar-overlay"
             onClick={onEditAvatarClick}
-          ></div>
+          />
           <img
             src={user.avatar}
             alt="old person with a red hat smiling to camera"

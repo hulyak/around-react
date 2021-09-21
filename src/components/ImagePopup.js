@@ -7,7 +7,7 @@ const ImagePopup = ({ name, isOpen, card, onClose }) => {
           className="popup__close-button popup__close-button_preview"
           aria-label="Close button"
           onClick={onClose}
-        ></button>
+        />
         <img
           className="popup__image"
           src={"" || card.link}

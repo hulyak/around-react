@@ -80,7 +80,7 @@ function App() {
             id="avatar-input"
             required
           />
-          <span className="popup__input-error avatar-input-error"></span>
+          <span className="popup__input-error avatar-input-error" />
         </label>
       </PopupWithForm>
 
@@ -102,7 +102,7 @@ function App() {
             maxLength="30"
             id="title-input"
           />
-          <span className="popup__input-error title-input-error"></span>
+          <span className="popup__input-error title-input-error" />
         </label>
 
         <label className="popup__form-field">
@@ -114,7 +114,7 @@ function App() {
             required
             id="url-input"
           />
-          <span className="popup__input-error url-input-error"></span>
+          <span className="popup__input-error url-input-error" />
         </label>
       </PopupWithForm>
 
@@ -136,7 +136,7 @@ function App() {
             id="name-input"
             required
           />
-          <span className="popup__input-error name-input-error"></span>
+          <span className="popup__input-error name-input-error" />
         </label>
         <label className="popup__form-field">
           <input
@@ -149,7 +149,7 @@ function App() {
             id="job-input"
             required
           />
-          <span className="popup__input-error job-input-error"></span>
+          <span className="popup__input-error job-input-error" />
         </label>
       </PopupWithForm>
 
