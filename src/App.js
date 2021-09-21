@@ -51,7 +51,7 @@ function App() {
     });
 
     api.getInitialCards().then((cards) => setCards(cards));
-  }, []);
+  }, [user]);
 
   return (
     <>
