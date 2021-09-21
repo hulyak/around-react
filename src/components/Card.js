@@ -1,4 +1,4 @@
-const Card = ({ card, onCardClick }) => {
+const Card = ({ card, onCardClick, onConfirmDeleteClick }) => {
   return (
     <>
       <li className="element" key={card._id}>
@@ -6,6 +6,7 @@ const Card = ({ card, onCardClick }) => {
           className="element__delete-button"
           aria-label="Delete button"
           type="button"
+          onClick={() => onConfirmDeleteClick(card._id)}
         ></button>
         <div
           className="element__image"

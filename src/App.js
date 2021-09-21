@@ -9,15 +9,24 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isClosePopup, setIsClosePopup] = useState(true);
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
+    useState(false);
+
   const [selectedCard, setSelectedCard] = useState(false);
 
   const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
   const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
   const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
   const handleCardClick = () => setSelectedCard(true);
+  const handleConfirmDeleteClick = () => setIsConfirmDeletePopupOpen(true);
 
-  const closeAllPopups = () => setIsClosePopup(true);
+  const closeAllPopups = () => {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setSelectedCard(false);
+    setIsConfirmDeletePopupOpen(false);
+  };
 
   return (
     <>
@@ -27,12 +36,14 @@ function App() {
         onAddPlaceClick={handleAddPlaceClick}
         onEditAvatarClick={handleEditAvatarClick}
         onCardClick={handleCardClick}
+        onConfirmDeleteClick={handleConfirmDeleteClick}
       />
       <PopupWithForm
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
         name="profile-avatar"
         title="Change profile picture"
+        buttonText="Save"
       >
         <label className="popup__form-field">
           <input
@@ -52,6 +63,7 @@ function App() {
         onClose={closeAllPopups}
         name="add-card"
         title="New place"
+        buttonText="Create"
       >
         <label class="popup__form-field">
           <input
@@ -85,6 +97,7 @@ function App() {
         onClose={closeAllPopups}
         name="edit-profile"
         title="Edit Profile"
+        buttonText="Save"
       >
         <label className="popup__form-field">
           <input
@@ -116,8 +129,10 @@ function App() {
 
       <PopupWithForm
         name="confirm"
-        // isOpen={isClosePopup}
+        isOpen={isConfirmDeletePopupOpen}
         onClose={closeAllPopups}
+        title="Are you sure?"
+        buttonText="Yes"
       />
 
       <ImagePopup

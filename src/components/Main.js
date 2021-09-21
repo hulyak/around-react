@@ -8,6 +8,7 @@ const Main = ({
   onAddPlaceClick,
   onEditAvatarClick,
   onCardClick,
+  onConfirmDeleteClick,
 }) => {
   const [userName, setUserName] = useState("Hulya");
   const [userDescription, setUserDescription] = useState("Frontend Developer");
@@ -63,7 +64,12 @@ const Main = ({
       <section className="elements">
         <ul className="elements__list">
           {cards.map((card) => (
-            <Card key={card._id} card={card} onCardClick={onCardClick} />
+            <Card
+              key={card._id}
+              card={card}
+              onCardClick={onCardClick}
+              onConfirmDeleteClick={onConfirmDeleteClick}
+            />
           ))}
         </ul>
       </section>
