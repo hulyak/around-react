@@ -20,6 +20,14 @@ class Api {
     }).then(this._handleResponse);
   }
 
+  /**
+   * Returns a Promise of type Response that waits for user information and card data from server
+   * @returns Promise<Response>
+   */
+  getAppInfo() {
+    return Promise.all([this.getUserData(), this.getInitialCards()]);
+  }
+
   addCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",

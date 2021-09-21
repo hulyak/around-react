@@ -46,12 +46,11 @@ function App() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    api.getUserData().then(({ name, avatar, about }) => {
-      setUser({ ...user, name, about, avatar });
+    api.getAppInfo().then(([userData, cards]) => {
+      setUser(userData);
+      setCards(cards);
     });
-
-    api.getInitialCards().then((cards) => setCards(cards));
-  }, [user]);
+  }, []);
 
   return (
     <>
