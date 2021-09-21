@@ -9,6 +9,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isClosePopup, setIsClosePopup] = useState(true);
+  const [selectedCard, setSelectedCard] = useState(false);
 
   const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
 
@@ -17,7 +19,10 @@ function App() {
   const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
 
   const handleCardClick = () => setIsAddPlacePopupOpen(true);
-  const closeAllPopups = () => {};
+
+  const handleClosePopupClick = () => {
+    setIsClosePopup(true);
+  };
 
   return (
     <>
@@ -27,10 +32,12 @@ function App() {
         onAddPlaceClick={handleAddPlaceClick}
         onEditAvatarClick={handleEditAvatarClick}
         onCardClick={handleCardClick}
+        onClosePopupClick={handleClosePopupClick}
       />
-      <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
-      <ImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
-      <PopupWithForm isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+      <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={isClosePopup} />
+      <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={isClosePopup} />
+      <PopupWithForm isOpen={isEditProfilePopupOpen} onClose={isClosePopup} />
+      <ImagePopup selectedCard={selectedCard} onClose={isClosePopup} />
       <Footer />
     </>
   );

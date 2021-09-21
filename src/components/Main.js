@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../utils/api";
+import avatar from "../images/avatar.png";
+import Card from "./Card";
 
 const Main = ({
   onEditProfileClick,
@@ -7,13 +9,22 @@ const Main = ({
   onEditAvatarClick,
   onCardClick,
 }) => {
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
+  const [userName, setUserName] = useState("Hulya");
+  const [userDescription, setUserDescription] = useState("Frontend Developer");
+  const [userAvatar, setUserAvatar] = useState(avatar);
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    api();
+    api.getUserData().then(({ name, avatar, about }) => {
+      setUserName(name);
+      setUserDescription(about);
+      setUserAvatar(avatar);
+    });
+
+    api.getInitialCards().then((cards) => {
+      console.log(cards);
+      setCards(cards);
+    });
   }, []);
 
   return (
@@ -22,20 +33,20 @@ const Main = ({
         <div>
           <div className="profile__avatar-overlay"></div>
           <img
-            src=""
+            src={userAvatar}
             alt="old person with a red hat smiling to camera"
             className="profile__avatar"
-            style={{ backgroundImage: `url(${userAvatar})` }}
+            // style={{ backgroundImage: `url(${userAvatar})` }}
           />
         </div>
         <div className="profile__info">
-          <h1 className="profile__name">Jacques Cousteau</h1>
+          <h1 className="profile__name">{userName}</h1>
           <button
             className="profile__edit-button"
             aria-label="edit button"
             type="button"
           ></button>
-          <p className="profile__job">Explorer</p>
+          <p className="profile__job">{userDescription}</p>
         </div>
         <button
           className="profile__add-button"
@@ -100,27 +111,12 @@ const Main = ({
       </section>
 
       <section className="elements">
-        <ul className="elements__list"></ul>
+        <ul className="elements__list">
+          {cards.map((card) => (
+            <Card key={card._id} card={card} onCardClick={onCardClick} />
+          ))}
+        </ul>
       </section>
-      {cards.map((card) => (
-        <template id="cards-template">
-          <li className="element">
-            <button
-              className="element__delete-button"
-              aria-label="Delete button"
-              type="button"
-            ></button>
-            <div className="element__image"></div>
-            <div className="element__flex">
-              <h2 className="element__text"></h2>
-              <div className="element__like-wrapper">
-                <button type="button" className="element__like-button"></button>
-                <p className="element__like-count"></p>
-              </div>
-            </div>
-          </li>
-        </template>
-      ))}
     </main>
   );
 };

@@ -15,7 +15,7 @@ class Api {
     );
   }
 
-  loadUserInfo() {
+  getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     }).then((res) => this._handleResponse(res));
@@ -26,7 +26,7 @@ class Api {
    * @returns Promise<Response>
    */
   getAppInfo() {
-    return Promise.all([this.loadUserInfo(), this.getInitialCards()]);
+    return Promise.all([this.getUserData(), this.getInitialCards()]);
   }
 
   addCard({ name, link }) {

@@ -7,7 +7,7 @@ import React from "react";
 const PopupWithForm = ({ title, name, isOpen }) => {
   return (
     <section className={`popup popup_type_${name}`}>
-      <div className={`popup__container ${isOpen} && popup_opened`}>
+      <div className={`popup__container ${isOpen} ? 'popup_is-opened' : ''`}>
         <button
           type="button"
           className="popup__close-button popup__close-button_profile"
