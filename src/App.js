@@ -29,6 +29,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsConfirmDeletePopupOpen(false);
+    setIsPreviewImagePopupOpen(false);
   };
 
   return (

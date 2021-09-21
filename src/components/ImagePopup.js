@@ -1,6 +1,6 @@
-const ImagePopup = ({ name, card, onClose }) => {
+const ImagePopup = ({ name, isOpen, card, onClose }) => {
   return (
-    <section className={`popup popup_type_${name}`}>
+    <section className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}>
       <div className={`popup__container popup__container_${name}`}>
         <button
           type="button"
@@ -8,8 +8,8 @@ const ImagePopup = ({ name, card, onClose }) => {
           aria-label="Close button"
           onClick={onClose}
         ></button>
-        <img className="popup__image" src={card} alt="preview" />
-        <p className="popup__preview-title"></p>
+        <img className="popup__image" src={card.link} alt="preview" />
+        <p className="popup__preview-title">{card.name}</p>
       </div>
     </section>
   );

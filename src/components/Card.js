@@ -11,7 +11,7 @@ const Card = ({ card, onCardClick, onConfirmDeleteClick }) => {
         <div
           className="element__image"
           style={{ backgroundImage: `url(${card.link})` }}
-          onClick={() => onCardClick()}
+          onClick={() => onCardClick(card)}
         ></div>
         <div className="element__flex">
           <h2 className="element__text">{card.name}</h2>

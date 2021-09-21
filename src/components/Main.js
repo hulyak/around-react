@@ -67,7 +67,7 @@ const Main = ({
             <Card
               key={card._id}
               card={card}
-              onCardClick={() => onCardClick(card)}
+              onCardClick={onCardClick}
               onConfirmDeleteClick={onConfirmDeleteClick}
             />
           ))}
