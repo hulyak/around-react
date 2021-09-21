@@ -2,7 +2,6 @@ class Api {
   constructor({ baseUrl, headers, apiKey }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
-    this._apiKey = apiKey;
   }
 
   _handleResponse(res) {
@@ -11,22 +10,14 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, { headers: this._headers }).then(
-      (res) => this._handleResponse(res)
+      this._handleResponse
     );
   }
 
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then((res) => this._handleResponse(res));
-  }
-
-  /**
-   * Returns a Promise of type Response that waits for user information and card data from server
-   * @returns Promise<Response>
-   */
-  getAppInfo() {
-    return Promise.all([this.getUserData(), this.getInitialCards()]);
+    }).then(this._handleResponse);
   }
 
   addCard({ name, link }) {
@@ -34,7 +25,7 @@ class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({ name, link }),
-    }).then((res) => this._handleResponse(res));
+    }).then(this._handleResponse);
   }
 
   setUserInfo({ name, about }) {
@@ -42,7 +33,7 @@ class Api {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({ name, about }),
-    }).then((res) => this._handleResponse(res));
+    }).then(this._handleResponse);
   }
 
   /**
@@ -55,7 +46,7 @@ class Api {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({ avatar }),
-    }).then((res) => this._handleResponse(res));
+    }).then(this._handleResponse);
   }
 
   /**
@@ -68,21 +59,21 @@ class Api {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
       method: "PUT",
-    }).then((res) => this._handleResponse(res));
+    }).then(this._handleResponse);
   }
 
   deleteLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
       method: "DELETE",
-    }).then((res) => this._handleResponse(res));
+    }).then(this._handleResponse);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
       method: "DELETE",
-    }).then((res) => this._handleResponse(res));
+    }).then(this._handleResponse);
   }
 
   addNewCard() {
@@ -90,10 +81,7 @@ class Api {
       headers: this._headers,
       method: "POST",
       body: JSON.stringify({ name: this.name, link: this.link }),
-    }).then((res) => {
-      if (res.ok) return res.json();
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    }).then(this._handleResponse);
   }
 }
 

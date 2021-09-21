@@ -1,7 +1,3 @@
-// "Edit profile";
-// "New place";
-// "Update profile picture";
-// "Are you sure?"
 const PopupWithForm = ({
   title,
   name,

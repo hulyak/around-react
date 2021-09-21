@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import ImagePopup from "./components/ImagePopup";
 import Main from "./components/Main";
 import PopupWithForm from "./components/PopupWithForm";
+import api from "./utils/api";
+import avatar from "./images/avatar.png";
 
 function App() {
+  // Popup States
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = useState("");
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
+    useState(false);
 
   const [isPreviewImagePopupOpen, setIsPreviewImagePopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState("");
+  const [selectedCard, setSelectedCard] = useState({});
 
   const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
   const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
@@ -32,6 +36,23 @@ function App() {
     setIsPreviewImagePopupOpen(false);
   };
 
+  // User State
+  const [user, setUser] = useState({
+    name: "",
+    about: "",
+    avatar: avatar,
+  });
+
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    api.getUserData().then(({ name, avatar, about }) => {
+      setUser({ ...user, name, about, avatar });
+    });
+
+    api.getInitialCards().then((cards) => setCards(cards));
+  }, []);
+
   return (
     <>
       <Header />
@@ -41,6 +62,8 @@ function App() {
         onEditAvatarClick={handleEditAvatarClick}
         onCardClick={handleCardClick}
         onConfirmDeleteClick={handleConfirmDeleteClick}
+        cards={cards}
+        user={user}
       />
       <PopupWithForm
         isOpen={isEditAvatarPopupOpen}
