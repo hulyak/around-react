@@ -31,7 +31,10 @@ const Main = ({
     <main>
       <section className="profile">
         <div>
-          <div className="profile__avatar-overlay"></div>
+          <div
+            className="profile__avatar-overlay"
+            onClick={onEditAvatarClick}
+          ></div>
           <img
             src={userAvatar}
             alt="old person with a red hat smiling to camera"
@@ -45,6 +48,7 @@ const Main = ({
             className="profile__edit-button"
             aria-label="edit button"
             type="button"
+            onClick={onEditProfileClick}
           ></button>
           <p className="profile__job">{userDescription}</p>
         </div>
@@ -52,62 +56,8 @@ const Main = ({
           className="profile__add-button"
           aria-label="Add button"
           type="button"
+          onClick={onAddPlaceClick}
         ></button>
-      </section>
-
-      <section className="popup popup_type_profile-avatar">
-        <div className="popup__container">
-          <button
-            type="button"
-            className="popup__close-button popup__close-button_avatar"
-            aria-label="Close button"
-          ></button>
-          <form
-            name="avatar"
-            className="popup__form popup__form_type_edit-profile-avatar"
-            noValidate
-          >
-            <h3 className="popup__title">Change profile picture</h3>
-            <label className="popup__form-field">
-              <input
-                type="url"
-                name="avatar"
-                className="popup__input popup__input_type_image-link"
-                placeholder="Avatar link"
-                id="avatar-input"
-                required
-              />
-              <span className="popup__input-error avatar-input-error"></span>
-            </label>
-            <button
-              type="submit"
-              className="popup__button"
-              aria-label="Save Button"
-            >
-              Save
-            </button>
-          </form>
-        </div>
-      </section>
-
-      <section className="popup popup_type_confirm">
-        <div className="popup__container popup__container_confirmation">
-          <button
-            type="button"
-            className="popup__close-button popup__close-button_confirm"
-            aria-label="Close button"
-          ></button>
-          <form name="card" className="popup__form popup__form_type_confirm">
-            <p className="popup__title">Are you sure?</p>
-            <button
-              type="submit"
-              className="popup__button"
-              aria-label="Confirm Button"
-            >
-              Yes
-            </button>
-          </form>
-        </div>
       </section>
 
       <section className="elements">

@@ -1,4 +1,4 @@
-const Card = ({ card }) => {
+const Card = ({ card, onCardClick }) => {
   return (
     <>
       <li className="element" key={card._id}>
@@ -10,6 +10,7 @@ const Card = ({ card }) => {
         <div
           className="element__image"
           style={{ backgroundImage: `url(${card.link})` }}
+          onClick={() => onCardClick(card)}
         ></div>
         <div className="element__flex">
           <h2 className="element__text">{card.name}</h2>
