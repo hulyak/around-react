@@ -9,22 +9,25 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
-    useState(false);
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = useState("");
 
-  const [selectedCard, setSelectedCard] = useState(false);
+  const [isPreviewImagePopupOpen, setIsPreviewImagePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState("");
 
   const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
   const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
   const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
-  const handleCardClick = () => setSelectedCard(true);
   const handleConfirmDeleteClick = () => setIsConfirmDeletePopupOpen(true);
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    setIsPreviewImagePopupOpen(true);
+  };
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(false);
     setIsConfirmDeletePopupOpen(false);
   };
 
@@ -65,7 +68,7 @@ function App() {
         title="New place"
         buttonText="Create"
       >
-        <label class="popup__form-field">
+        <label className="popup__form-field">
           <input
             type="text"
             name="name"
@@ -79,7 +82,7 @@ function App() {
           <span className="popup__input-error title-input-error"></span>
         </label>
 
-        <label class="popup__form-field">
+        <label className="popup__form-field">
           <input
             type="url"
             name="link"
@@ -104,7 +107,7 @@ function App() {
             type="text"
             name="name"
             className="popup__input popup__input_type_name"
-            placeholder="name"
+            placeholder="Name"
             minLength="2"
             maxLength="40"
             id="name-input"
@@ -138,12 +141,9 @@ function App() {
       <ImagePopup
         card={selectedCard}
         onClose={closeAllPopups}
-        onClick={handleCardClick}
+        isOpen={isPreviewImagePopupOpen}
         name="preview"
-      >
-        <img className="popup__image" src="#" alt="preview" />
-        <p className="popup__preview-title"></p>
-      </ImagePopup>
+      />
       <Footer />
     </>
   );

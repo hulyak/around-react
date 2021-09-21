@@ -23,7 +23,7 @@ const Main = ({
     });
 
     api.getInitialCards().then((cards) => {
-      console.log(cards);
+      // console.log(cards);
       setCards(cards);
     });
   }, []);
@@ -67,7 +67,7 @@ const Main = ({
             <Card
               key={card._id}
               card={card}
-              onCardClick={onCardClick}
+              onCardClick={() => onCardClick(card)}
               onConfirmDeleteClick={onConfirmDeleteClick}
             />
           ))}
