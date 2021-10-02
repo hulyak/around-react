@@ -1,12 +1,21 @@
-import { createContext } from "react";
+import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-const Card = ({ card, onCardClick, onConfirmDeleteClick }) => {
+const Card = ({
+  card,
+  onCardClick,
+  onConfirmDeleteClick,
+  onCardLike,
+  onCardDelete,
+}) => {
   // const { _id, name, description, imageUrl, isConfirmed } = card;
 
-  const currentUser = createContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
+
+  // Checking if the current user is the owner of the current card
   const isOwn = card.owner._id === currentUser._id;
 
+  // Check if the card was liked by the current user
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
   const handleLikeClick = () => {
@@ -23,6 +32,10 @@ const Card = ({ card, onCardClick, onConfirmDeleteClick }) => {
     }
   };
 
+  const handleDeleteClick = () => {
+    onConfirmDeleteClick(card._id);
+  };
+
   return (
     <>
       <li className="element">
@@ -34,7 +47,7 @@ const Card = ({ card, onCardClick, onConfirmDeleteClick }) => {
           }`}
           aria-label="Delete button"
           type="button"
-          onClick={() => onConfirmDeleteClick(card._id)}
+          onClick={handleDeleteClick}
         />
         <div
           className="element__image"
@@ -44,7 +57,12 @@ const Card = ({ card, onCardClick, onConfirmDeleteClick }) => {
         <div className="element__flex">
           <h2 className="element__text">{card.name}</h2>
           <div className="element__like-wrapper">
-            <button type="button" className="element__like-button" />
+            <button
+              type="button"
+              className={`element__like-button ${
+                isLiked && "element__like-button_active"
+              }`}
+            />
             <p className="element__like-count" onCardLike={handleLikeClick}>
               {card.likes.length}
             </p>

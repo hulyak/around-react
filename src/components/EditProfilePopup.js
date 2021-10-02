@@ -1,18 +1,77 @@
-import React from "react";
+import { useContext, useEffect, useState } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import PopupWithForm from "./PopupWithForm";
 
-const EditProfilePopup = () => {
+const EditProfilePopup = ({ isOpen, onClose }) => {
+  // show the current user's info from the context
+  const currentUser = useContext(CurrentUserContext);
+
+  const [formFields, setFormFields] = useState({
+    name: "",
+    about: "",
+  });
+
+  const { name, about } = formFields;
+
+  const handleChange = (e) => {
+    setFormFields({ ...formFields, [e.target.name]: e.target.value });
+  };
+
+  // After loading the current user from the API their data will be used in managed components
+  useEffect(() => {
+    setFormFields({
+      name: currentUser.name,
+      description: currentUser.about,
+    });
+  }, [currentUser]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.onUpdateUser({
+      name,
+      about,
+    });
+  };
+
   return (
-    <label className="popup__form-field">
-      <input
-        type="url"
-        name="avatar"
-        className="popup__input popup__input_type_image-link"
-        placeholder="Avatar link"
-        id="avatar-input"
-        required
-      />
-      <span className="popup__input-error avatar-input-error" />
-    </label>
+    <PopupWithForm
+      isOpen={isOpen}
+      onClose={onClose}
+      name="edit-profile"
+      title="Edit Profile"
+      buttonText="Save"
+    >
+      <label className="popup__form-field">
+        <input
+          type="text"
+          name="name"
+          className="popup__input popup__input_type_name"
+          placeholder="Name"
+          minLength="2"
+          maxLength="40"
+          id="name-input"
+          required
+          value={name}
+          onChange={handleChange}
+        />
+        <span className="popup__input-error name-input-error" />
+      </label>
+      <label className="popup__form-field">
+        <input
+          type="text"
+          name="about"
+          className="popup__input popup__input_type_job"
+          placeholder="Job"
+          minLength="2"
+          maxLength="200"
+          id="job-input"
+          required
+          value={about}
+          onChange={handleChange}
+        />
+        <span className="popup__input-error job-input-error" />
+      </label>
+    </PopupWithForm>
   );
 };
 

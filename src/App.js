@@ -56,10 +56,16 @@ function App() {
   const handleCardLike = (card) => {
     // Check one more time if this card was already liked
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
     // Send a request to the API and getting the updated card data
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  };
+
+  const handleCardDelete = () => {
+    api.deleteCard(selectedCard._id).then(() => {
+      setSelectedCard({});
+      setIsConfirmDeletePopupOpen(false);
     });
   };
 
@@ -75,12 +81,13 @@ function App() {
           onConfirmDeleteClick={handleConfirmDeleteClick}
           cards={cards}
           onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <EditProfilePopup
-          isOpen={isEditAvatarPopupOpen}
+          isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          name="profile-avatar"
-          title="Change profile picture"
+          name="edit-profile"
+          title="Edit profile"
           buttonText="Save"
         />
 
@@ -117,38 +124,24 @@ function App() {
             <span className="popup__input-error url-input-error" />
           </label>
         </PopupWithForm>
+
         <PopupWithForm
-          isOpen={isEditProfilePopupOpen}
+          isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          name="edit-profile"
-          title="Edit Profile"
+          name="profile-avatar"
+          title="Change profile picture"
           buttonText="Save"
         >
           <label className="popup__form-field">
             <input
-              type="text"
-              name="name"
-              className="popup__input popup__input_type_name"
-              placeholder="Name"
-              minLength="2"
-              maxLength="40"
-              id="name-input"
+              type="url"
+              name="avatar"
+              className="popup__input popup__input_type_image-link"
+              placeholder="Avatar link"
+              id="avatar-input"
               required
             />
-            <span className="popup__input-error name-input-error" />
-          </label>
-          <label className="popup__form-field">
-            <input
-              type="text"
-              name="about"
-              className="popup__input popup__input_type_job"
-              placeholder="Job"
-              minLength="2"
-              maxLength="200"
-              id="job-input"
-              required
-            />
-            <span className="popup__input-error job-input-error" />
+            <span className="popup__input-error avatar-input-error" />
           </label>
         </PopupWithForm>
         <PopupWithForm

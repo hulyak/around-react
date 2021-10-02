@@ -10,8 +10,13 @@ const Main = ({
   onConfirmDeleteClick,
   cards,
   onCardLike,
+  onCardDelete,
 }) => {
   const currentUser = useContext(CurrentUserContext);
+
+  const handleCardLike = () => {};
+
+  const handleCardDelete = () => {};
 
   return (
     <main>
@@ -53,7 +58,8 @@ const Main = ({
               card={card}
               onCardClick={onCardClick}
               onConfirmDeleteClick={onConfirmDeleteClick}
-              onCardLike={onCardLike}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
             />
           ))}
         </ul>
