@@ -8,6 +8,7 @@ import api from "./utils/api";
 import avatar from "./images/avatar.png";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import EditProfilePopup from "./components/EditProfilePopup";
+import EditAvatarPopup from "./components/EditAvatarPopup";
 
 function App() {
   // Context for Current User
@@ -16,6 +17,8 @@ function App() {
     about: "",
     avatar: avatar,
   });
+
+  console.log(currentUser);
   // Popup States
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -69,6 +72,20 @@ function App() {
     });
   };
 
+  const handleUpdateUser = () => {
+    api.setUserInfo(currentUser.name, currentUser.about).then((userData) => {
+      setCurrentUser(userData);
+      closeAllPopups();
+    });
+  };
+
+  const handleUpdateAvatar = () => {
+    api.setUserAvatar(currentUser.avatar).then((userData) => {
+      setCurrentUser(userData);
+      closeAllPopups();
+    });
+  };
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -86,11 +103,13 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          name="edit-profile"
-          title="Edit profile"
-          buttonText="Save"
+          onUpdateUser={handleUpdateUser}
         />
-
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
         <PopupWithForm
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
@@ -126,31 +145,13 @@ function App() {
         </PopupWithForm>
 
         <PopupWithForm
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          name="profile-avatar"
-          title="Change profile picture"
-          buttonText="Save"
-        >
-          <label className="popup__form-field">
-            <input
-              type="url"
-              name="avatar"
-              className="popup__input popup__input_type_image-link"
-              placeholder="Avatar link"
-              id="avatar-input"
-              required
-            />
-            <span className="popup__input-error avatar-input-error" />
-          </label>
-        </PopupWithForm>
-        <PopupWithForm
           name="confirm"
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
           title="Are you sure?"
           buttonText="Yes"
         />
+
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
-const EditProfilePopup = ({ isOpen, onClose }) => {
+const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   // show the current user's info from the context
   const currentUser = useContext(CurrentUserContext);
 
@@ -21,13 +21,14 @@ const EditProfilePopup = ({ isOpen, onClose }) => {
   useEffect(() => {
     setFormFields({
       name: currentUser.name,
-      description: currentUser.about,
+      about: currentUser.about,
     });
   }, [currentUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.onUpdateUser({
+    // Pass the values of the managed components to the external handler
+    onUpdateUser({
       name,
       about,
     });
@@ -40,6 +41,7 @@ const EditProfilePopup = ({ isOpen, onClose }) => {
       name="edit-profile"
       title="Edit Profile"
       buttonText="Save"
+      onSubmit={handleSubmit}
     >
       <label className="popup__form-field">
         <input

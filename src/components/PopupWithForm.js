@@ -5,6 +5,7 @@ const PopupWithForm = ({
   isOpen,
   children,
   onClose,
+  onSubmit,
 }) => {
   return (
     <section className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}>
