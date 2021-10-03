@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-const EditAvatarPopup = ({ isOpen, closeAllPopups, onUpdateAvatar }) => {
+const EditAvatarPopup = ({ isOpen, onClose, onUpdateAvatar }) => {
   const avatarRef = useRef();
 
   const handleSubmit = (e) => {
@@ -14,7 +14,7 @@ const EditAvatarPopup = ({ isOpen, closeAllPopups, onUpdateAvatar }) => {
   return (
     <PopupWithForm
       isOpen={isOpen}
-      closeAllPopups={closeAllPopups}
+      onClose={onClose}
       name="profile-avatar"
       title="Change profile picture"
       buttonText="Save"

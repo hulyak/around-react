@@ -1,6 +1,19 @@
+import { useRef } from "react";
+
 const ImagePopup = ({ name, isOpen, card, onClose }) => {
+  const modalRef = useRef();
+
+  const handleOutsideClick = (e) => {
+    if (modalRef.current === e.target) {
+      onClose(e);
+    }
+  };
   return (
-    <section className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}>
+    <section
+      className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}
+      ref={modalRef}
+      onClick={handleOutsideClick}
+    >
       <div className={`popup__container popup__container_${name}`}>
         <button
           type="button"

@@ -83,14 +83,6 @@ class Api {
       method: "DELETE",
     }).then(this._handleResponse);
   }
-
-  addNewCard() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
-      method: "POST",
-      body: JSON.stringify({ name: this.name, link: this.link }),
-    }).then(this._handleResponse);
-  }
 }
 
 const TOKEN = "6af9648e-23ea-4651-bc48-5ca8b1b3f30e";

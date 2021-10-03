@@ -87,12 +87,12 @@ function App() {
   };
 
   const handleAddPlaceSubmit = () => {
-    const { name, link } = currentUser;
-    api.addNewCard(name, link).then((card) => {
-      setCards([...cards, card]);
+    api.addCard(name: cards.name, link:cards.link).then((card) => {
+      setCards((state) => [card, ...state]);
       closeAllPopups();
     });
   };
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
