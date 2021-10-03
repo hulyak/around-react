@@ -4,11 +4,12 @@ import Header from "./components/Header";
 import ImagePopup from "./components/ImagePopup";
 import Main from "./components/Main";
 import PopupWithForm from "./components/PopupWithForm";
+import EditProfilePopup from "./components/EditProfilePopup";
+import EditAvatarPopup from "./components/EditAvatarPopup";
+import AddPlacePopup from "./components/AddPlacePopup";
 import api from "./utils/api";
 import avatar from "./images/avatar.png";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
-import EditProfilePopup from "./components/EditProfilePopup";
-import EditAvatarPopup from "./components/EditAvatarPopup";
 
 function App() {
   // Context for Current User
@@ -18,7 +19,6 @@ function App() {
     avatar: avatar,
   });
 
-  console.log(currentUser);
   // Popup States
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -86,6 +86,13 @@ function App() {
     });
   };
 
+  const handleAddPlaceSubmit = () => {
+    const { name, link } = currentUser;
+    api.addNewCard(name, link).then((card) => {
+      setCards([...cards, card]);
+      closeAllPopups();
+    });
+  };
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -110,39 +117,11 @@ function App() {
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
         />
-        <PopupWithForm
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          name="add-card"
-          title="New place"
-          buttonText="Create"
-        >
-          <label className="popup__form-field">
-            <input
-              type="text"
-              name="name"
-              className="popup__input popup__input_type_title"
-              placeholder="Title"
-              required
-              minLength="1"
-              maxLength="30"
-              id="title-input"
-            />
-            <span className="popup__input-error title-input-error" />
-          </label>
-
-          <label className="popup__form-field">
-            <input
-              type="url"
-              name="link"
-              className="popup__input popup__input_type_image-link"
-              placeholder="Image Link"
-              required
-              id="url-input"
-            />
-            <span className="popup__input-error url-input-error" />
-          </label>
-        </PopupWithForm>
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         <PopupWithForm
           name="confirm"

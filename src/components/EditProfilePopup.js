@@ -28,10 +28,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Pass the values of the managed components to the external handler
-    onUpdateUser({
-      name,
-      about,
-    });
+    onUpdateUser(formFields);
   };
 
   return (
