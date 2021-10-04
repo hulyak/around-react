@@ -13,24 +13,14 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      onCardLike(card._id, {
-        ...card,
-        likes: card.likes.filter((i) => i._id !== currentUser._id),
-      });
-    } else {
-      onCardLike(card._id, {
-        ...card,
-        likes: [...card.likes, currentUser],
-      });
-    }
+    onCardLike(card._id);
   };
 
   return (
     <>
       <li className="element">
         <button
-          className={`element__delete-button ${
+          className={`${
             isOwn
               ? "element__delete-button"
               : "element__delete-button_type_hidden"
@@ -50,9 +40,9 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
             <button
               type="button"
               className={`element__like-button ${
-                isLiked && "element__like-button_active"
+                isLiked ? "element__like-button_active" : "element__like-button"
               }`}
-              onCardLike={handleLikeClick}
+              onClick={handleLikeClick}
             />
             <p className="element__like-count">{card.likes.length}</p>
           </div>

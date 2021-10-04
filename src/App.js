@@ -69,18 +69,18 @@ function App() {
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
+        setCards((cards) =>
+          cards.map((c) => (c._id === card._id ? newCard : c))
         );
       })
       .catch((e) => console.error(e));
   };
 
-  const handleCardDelete = () => {
+  const handleCardDelete = (card) => {
     api
-      .deleteCard(selectedCard._id)
+      .deleteCard(card._id)
       .then(() => {
-        setSelectedCard({});
+        setCards((state) => state.filter((c) => c._id !== card._id));
         closeAllPopups();
       })
       .catch((err) => console.error(err));
@@ -96,9 +96,9 @@ function App() {
       .catch((err) => console.error(err));
   };
 
-  const handleUpdateAvatar = ({ avatar }) => {
+  const handleUpdateAvatar = (avatar) => {
     api
-      .setUserAvatar({ avatar })
+      .setUserAvatar(avatar)
       .then((userData) => {
         setCurrentUser({ avatar, ...userData });
         closeAllPopups();

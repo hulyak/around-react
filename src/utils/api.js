@@ -49,7 +49,7 @@ class Api {
    * @param {String} avatar url of the user's profile
    * @returns Promise<Response>
    */
-  setUserAvatar({ avatar }) {
+  setUserAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       headers: this._headers,
       method: "PATCH",
@@ -75,6 +75,16 @@ class Api {
       headers: this._headers,
       method: "DELETE",
     }).then(this._handleResponse);
+  }
+
+  /**
+   * Returns if the card is liked or not and depending on it deletes or adds a like
+   * @param {*String} cardId
+   * @param {*Boolean} isLiked
+   * @returns Promise<Response>
+   */
+  changeLikeCardStatus(cardId, isLiked) {
+    return isLiked ? this.addLike(cardId) : this.deleteLike(cardId);
   }
 
   deleteCard(cardId) {
