@@ -1,13 +1,7 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-const Card = ({
-  card,
-  onCardClick,
-  onConfirmDeleteClick,
-  onCardLike,
-  onCardDelete,
-}) => {
+const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
   // const { _id, name, description, imageUrl, isConfirmed } = card;
 
   const currentUser = useContext(CurrentUserContext);
@@ -32,10 +26,6 @@ const Card = ({
     }
   };
 
-  const handleDeleteClick = () => {
-    onCardDelete(card._id);
-  };
-
   return (
     <>
       <li className="element">
@@ -47,7 +37,7 @@ const Card = ({
           }`}
           aria-label="Delete button"
           type="button"
-          onClick={handleDeleteClick}
+          onClick={() => onCardDelete(card._id)}
         />
         <div
           className="element__image"

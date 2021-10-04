@@ -19,6 +19,8 @@ function App() {
     avatar: avatar,
   });
 
+  const [cards, setCards] = useState([]);
+
   // Popup States
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -34,6 +36,7 @@ function App() {
   const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
   const handleConfirmDeleteClick = () => setIsConfirmDeletePopupOpen(true);
 
+  // Image preview
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setIsPreviewImagePopupOpen(true);
@@ -47,50 +50,70 @@ function App() {
     setIsPreviewImagePopupOpen(false);
   };
 
-  const [cards, setCards] = useState([]);
-
+  // load the project with cards and user information
   useEffect(() => {
-    api.getAppInfo().then(([userData, cards]) => {
-      setCurrentUser(userData);
-      setCards(cards);
-    });
+    api
+      .getAppInfo()
+      .then(([userData, cards]) => {
+        setCurrentUser(userData);
+        setCards(cards);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
+  // API CALLS
   const handleCardLike = (card) => {
     // Check one more time if this card was already liked
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     // Send a request to the API and getting the updated card data
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((e) => console.error(e));
   };
 
   const handleCardDelete = () => {
-    api.deleteCard(selectedCard._id).then(() => {
-      setSelectedCard({});
-      setIsConfirmDeletePopupOpen(false);
-    });
+    api
+      .deleteCard(selectedCard._id)
+      .then(() => {
+        setSelectedCard({});
+        closeAllPopups();
+      })
+      .catch((err) => console.error(err));
   };
 
-  const handleUpdateUser = () => {
-    api.setUserInfo(currentUser.name, currentUser.about).then((userData) => {
-      setCurrentUser(userData);
-      closeAllPopups();
-    });
+  const handleUpdateUser = ({ name, about }) => {
+    api
+      .setUserInfo({ name, about })
+      .then((userData) => {
+        setCurrentUser({ name, about, ...userData });
+        closeAllPopups();
+      })
+      .catch((err) => console.error(err));
   };
 
-  const handleUpdateAvatar = () => {
-    api.setUserAvatar(currentUser.avatar).then((userData) => {
-      setCurrentUser(userData);
-      closeAllPopups();
-    });
+  const handleUpdateAvatar = ({ avatar }) => {
+    api
+      .setUserAvatar({ avatar })
+      .then((userData) => {
+        setCurrentUser({ avatar, ...userData });
+        closeAllPopups();
+      })
+      .catch((err) => console.error(err));
   };
 
-  const handleAddPlaceSubmit = () => {
-    api.addCard(name: cards.name, link:cards.link).then((card) => {
-      setCards((state) => [card, ...state]);
-      closeAllPopups();
-    });
+  const handleAddPlaceSubmit = ({ name, link }) => {
+    api
+      .addCard({ name, link })
+      .then((card) => {
+        setCards([card, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -117,6 +140,7 @@ function App() {
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
         />
+
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
@@ -124,9 +148,9 @@ function App() {
         />
 
         <PopupWithForm
-          name="confirm"
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
+          name="confirm"
           title="Are you sure?"
           buttonText="Yes"
         />
