@@ -78,7 +78,7 @@ class Api {
   }
 
   /**
-   * Returns if the card is liked or not and depending on it deletes or adds a like
+   * Returns if the card is liked or not. Depending on it deletes or adds a like
    * @param {*String} cardId
    * @param {*Boolean} isLiked
    * @returns Promise<Response>
