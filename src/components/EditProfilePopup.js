@@ -23,7 +23,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
       name: currentUser.name,
       about: currentUser.about,
     });
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
           maxLength="40"
           id="name-input"
           required
-          value={name}
+          value={name || ""}
           onChange={handleChange}
         />
         <span className="popup__input-error name-input-error" />
@@ -66,7 +66,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
           maxLength="200"
           id="job-input"
           required
-          value={about}
+          value={about || ""}
           onChange={handleChange}
         />
         <span className="popup__input-error job-input-error" />

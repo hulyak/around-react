@@ -1,5 +1,3 @@
-import { useRef } from "react";
-
 const PopupWithForm = ({
   title,
   name,
@@ -9,18 +7,15 @@ const PopupWithForm = ({
   onClose,
   onSubmit,
 }) => {
-  const modalRef = useRef();
-
   const handleOutsideClick = (e) => {
-    if (modalRef.current === e.target) {
-      onClose(e);
+    if (e.target === e.currentTarget) {
+      onClose();
     }
   };
 
   return (
     <section
       className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}
-      ref={modalRef}
       onClick={handleOutsideClick}
     >
       <div className={`popup__container popup__container_${name}`}>
@@ -33,7 +28,6 @@ const PopupWithForm = ({
         <form
           name={name}
           className={`popup__form popup__form_type_${name}`}
-          noValidate
           onSubmit={onSubmit}
         >
           <h2 className="popup__title">{title}</h2>

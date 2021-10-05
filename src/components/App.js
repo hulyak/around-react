@@ -50,6 +50,18 @@ function App() {
     setIsPreviewImagePopupOpen(false);
   };
 
+  useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === "Escape") {
+        closeAllPopups();
+      }
+    };
+    document.addEventListener("keydown", closeByEscape);
+    return () => {
+      document.removeEventListener("keydown", closeByEscape);
+    };
+  }, []);
+
   // load the project with cards and user information
   useEffect(() => {
     api
@@ -117,62 +129,60 @@ function App() {
   };
 
   return (
-    <>
-      <CurrentUserContext.Provider value={currentUser}>
-        <Header />
-        <Main
-          onEditProfileClick={handleEditProfileClick}
-          onAddPlaceClick={handleAddPlaceClick}
-          onEditAvatarClick={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          onConfirmDeleteClick={handleConfirmDeleteClick}
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-        />
+    <CurrentUserContext.Provider value={currentUser}>
+      <Header />
+      <Main
+        onEditProfileClick={handleEditProfileClick}
+        onAddPlaceClick={handleAddPlaceClick}
+        onEditAvatarClick={handleEditAvatarClick}
+        onCardClick={handleCardClick}
+        onConfirmDeleteClick={handleConfirmDeleteClick}
+        cards={cards}
+        onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
+      />
 
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        />
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}
+      />
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+      />
 
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
-        />
+      <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlaceSubmit}
+      />
 
-        <PopupWithForm
-          isOpen={isConfirmDeletePopupOpen}
-          onClose={closeAllPopups}
-          name="confirm"
-          title="Are you sure?"
-          buttonText="Yes"
-        />
+      <PopupWithForm
+        isOpen={isConfirmDeletePopupOpen}
+        onClose={closeAllPopups}
+        name="confirm"
+        title="Are you sure?"
+        buttonText="Yes"
+      />
 
-        <ImagePopup
-          card={selectedCard}
-          onClose={closeAllPopups}
-          isOpen={isPreviewImagePopupOpen}
-          name="preview"
-        />
+      <ImagePopup
+        card={selectedCard}
+        onClose={closeAllPopups}
+        isOpen={isPreviewImagePopupOpen}
+        name="preview"
+      />
 
-        <PopupWithForm
-          isOpen={isConfirmDeletePopupOpen}
-          onClose={closeAllPopups}
-          name="confirm"
-          title="Are you sure?"
-          buttonText="Yes"
-        />
-        <Footer />
-      </CurrentUserContext.Provider>
-    </>
+      <PopupWithForm
+        isOpen={isConfirmDeletePopupOpen}
+        onClose={closeAllPopups}
+        name="confirm"
+        title="Are you sure?"
+        buttonText="Yes"
+      />
+      <Footer />
+    </CurrentUserContext.Provider>
   );
 }
 
