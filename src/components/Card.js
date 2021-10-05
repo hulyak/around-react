@@ -1,7 +1,13 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
+const Card = ({
+  card,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+  onConfirmDeleteClick,
+}) => {
   // const { _id, name, description, imageUrl, isConfirmed } = card;
 
   const currentUser = useContext(CurrentUserContext);
@@ -12,22 +18,23 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
   // Check if the card was liked by the current user
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
-  const handleLikeClick = () => {
-    onCardLike(card._id);
+  const handleDeleteSubmit = (evt) => {
+    evt.preventDefault();
+    onCardDelete(card);
   };
 
   return (
     <>
       <li className="element">
         <button
-          className={`${
+          className={`element__delete-button ${
             isOwn
               ? "element__delete-button"
               : "element__delete-button_type_hidden"
           }`}
           aria-label="Delete button"
           type="button"
-          onClick={() => onCardDelete(card._id)}
+          onClick={handleDeleteSubmit}
         />
         <div
           className="element__image"
@@ -42,7 +49,7 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
               className={`element__like-button ${
                 isLiked ? "element__like-button_active" : "element__like-button"
               }`}
-              onClick={handleLikeClick}
+              onClick={() => onCardLike(card)}
             />
             <p className="element__like-count">{card.likes.length}</p>
           </div>

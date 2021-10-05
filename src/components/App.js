@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import ImagePopup from "./components/ImagePopup";
-import Main from "./components/Main";
-import PopupWithForm from "./components/PopupWithForm";
-import EditProfilePopup from "./components/EditProfilePopup";
-import EditAvatarPopup from "./components/EditAvatarPopup";
-import AddPlacePopup from "./components/AddPlacePopup";
-import api from "./utils/api";
-import avatar from "./images/avatar.png";
-import { CurrentUserContext } from "./contexts/CurrentUserContext";
+import Footer from "./Footer";
+import Header from "./Header";
+import ImagePopup from "./ImagePopup";
+import Main from "./Main";
+import PopupWithForm from "./PopupWithForm";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
+import api from "../utils/api";
+import avatar from "../images/avatar.png";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
   // Context for Current User
@@ -69,8 +69,8 @@ function App() {
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards((cards) =>
-          cards.map((c) => (c._id === card._id ? newCard : c))
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
         );
       })
       .catch((e) => console.error(e));
@@ -130,6 +130,7 @@ function App() {
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
         />
+
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
@@ -160,6 +161,14 @@ function App() {
           onClose={closeAllPopups}
           isOpen={isPreviewImagePopupOpen}
           name="preview"
+        />
+
+        <PopupWithForm
+          isOpen={isConfirmDeletePopupOpen}
+          onClose={closeAllPopups}
+          name="confirm"
+          title="Are you sure?"
+          buttonText="Yes"
         />
         <Footer />
       </CurrentUserContext.Provider>

@@ -11,6 +11,7 @@ const AddPlacePopup = ({ isOpen, onClose, onAddPlace }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onAddPlace(formFields);
+    setFormFields({ name: "", link: "" });
   };
 
   return (
